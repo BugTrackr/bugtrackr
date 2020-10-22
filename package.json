@@ -1,0 +1,22 @@
+{
+  "name": "bugtrackr",
+  "version": "0.0.1",
+  "description": "Tracking bugs can be difficult, and important for production-grade applications. A bug tracker to squash those ‘em bugs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BugTrackr/bugtrackr.git"
+  },
+  "keywords": [
+    "bugs"
+  ],
+  "author": "BugTrackr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BugTrackr/bugtrackr/issues"
+  },
+  "homepage": "https://github.com/BugTrackr/bugtrackr#readme"
+}

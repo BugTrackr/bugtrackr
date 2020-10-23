@@ -1,0 +1,39 @@
+{
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 12,
+    "ecmaFeatures": { "jsx": true }
+  },
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "commonjs": true,
+    "jest": true,
+    "node": true
+  },
+  "rules": {
+    "react/react-in-jsx-scope": 0,
+    "react/display-name": 0,
+    "react/prop-types": 0,
+    "no-console": [
+      2,
+      {
+        "allow": ["warn", "error"]
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@
   "name": "bugtrackrFE",
   "version": "1.0.0",
   "description": "Front-end for Bugtrackr",
-  "main": "index.js",
+  "private": "true",
   "author": "Tai N, Mariya E",
   "license": "MIT",
   "scripts": {

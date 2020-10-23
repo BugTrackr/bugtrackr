@@ -1,0 +1,8 @@
+{
+  "name": "bugtrackrFE",
+  "version": "1.0.0",
+  "description": "Front-end for Bugtrackr",
+  "main": "index.js",
+  "author": "Tai N, Mariya E",
+  "license": "MIT"
+}

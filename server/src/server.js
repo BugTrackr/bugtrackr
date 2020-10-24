@@ -1,6 +1,6 @@
+require('dotenv').config()
 const express = require('express');
 const bugRouter = require('./routes/bugs');
-
 const app = express();
 const PORT = 3000;
 

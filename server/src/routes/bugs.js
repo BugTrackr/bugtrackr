@@ -7,6 +7,7 @@ router.get('/getAllStatus', bugsController.getAllStatus, (req, res) => res.statu
 
 // TODO: /create
 // this route will create a new bug in the database
+router.post('/create', bugsController.create, (req, res) => res.status(200).json(res.locals.data));
 
 // TODO: /details/:bugId
 // this route will get the current bug details for given bug id

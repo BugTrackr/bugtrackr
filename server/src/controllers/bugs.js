@@ -14,8 +14,10 @@ bugsController.getAllStatus = (req, res, next) => {
 };
 
 // TODO: create bug
+// for now just return a test object
 bugsController.create = (req, res, next) => {
-
+  res.locals.data = { _id: 0, description: 'test bug'};
+  next();
 };
 
 // TODO: get bug details

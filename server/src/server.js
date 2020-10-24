@@ -12,6 +12,7 @@ app.get('/', (req, res, next) => {
 
 app.use('/bugs', bugRouter);
 
+// global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',

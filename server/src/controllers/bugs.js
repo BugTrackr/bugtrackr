@@ -84,9 +84,10 @@ bugsController.delete = (req, res, next) => {
 };
 
 // Sets the status to 'RESOLVED' for a single bug
+// The frontend UI should have all STATUS values since it needs to display them in a dropdown
+// The 'resolve' operation should send the STATUS ID in this request
 bugsController.resolve = (req, res, next) => {
-  const {bugId} = req.body;
-  const resolved = 3; // RESOLVED
+  const {bugId, resolved} = req.body;
   const selection = `
     UPDATE bugs set status = ${resolved}
     WHERE id = ${bugId}

@@ -10,7 +10,11 @@ const usersController = {};
 // By default, order will be by bugId and project(?)
 usersController.getAssigned = (req, res, next) => {
   const {userId} = req.params;
-  const selection = `SELECT * from bugs where bugs.assigned_to = ${userId} order by bugs.id`;
+  const selection = `
+    SELECT * from bugs
+    WHERE bugs.assigned_to = ${userId}
+    ORDER BY bugs.id`;
+
   db.query(selection)
     .then(results => {
       res.locals.data = results.rows;

@@ -22,8 +22,19 @@ export const logIn = () => {
   return (dispatch) => {
     // send a request and then dispatch actions
     dispatch(setFetching());
+    // simulation
     setTimeout(() => {
       dispatch(setAuthenticationSuccess());
-    }, 5000);
+    }, 2000);
+  };
+};
+
+export const logOut = () => {
+  return (dispatch) => {
+    dispatch(setFetching);
+    // simulation
+    setTimeout(() => {
+      dispatch(setAuthenticationSuccess());
+    }, 2000);
   };
 };

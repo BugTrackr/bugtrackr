@@ -15,8 +15,13 @@ bugsController.getAllStatus = (req, res, next) => {
 
 bugsController.create = (req, res, next) => {
   const {userId, description, assigned_to, projectId, status} = req.body;
-  const selection = `
-    INSERT into bugs (author, description, assigned_to, project_id, status)
+
+  const selection = (assigned_to === undefined)
+  ? `
+    INSERT into bugs (author, description, project_id, status)
+    VALUES (${userId},'${description }', ${projectId}, ${status})
+    RETURNING id, project_id, author, assigned_to, description, status`
+  : `INSERT into bugs (author, description, assigned_to, project_id, status)
     VALUES (${userId},'${description }', ${assigned_to}, ${projectId}, ${status})
     RETURNING id, project_id, author, assigned_to, description, status`;
 
@@ -42,7 +47,6 @@ bugsController.get = (req, res, next) => {
 };
 
 // Updates a single bug
-// status = 0, 1, 2 ...
 bugsController.update = (req, res, next) => {
   const {bugId, assigned_to, description, projectId, status} = req.body;
   const selection = `
@@ -73,6 +77,7 @@ bugsController.delete = (req, res, next) => {
     .catch(error => next(error));  
 };
 
+// Sets the status to 'RESOLVED' for a single bug
 bugsController.resolve = (req, res, next) => {
   const {bugId} = req.body;
   const resolved = 3; // RESOLVED

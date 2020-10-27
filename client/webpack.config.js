@@ -13,6 +13,8 @@ module.exports = {
   devServer: {
     contentBase: './dist',
     open: true,
+    hot: true,
+    watchContentBase: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -26,7 +28,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.m?js(x)?$/,
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
@@ -43,7 +45,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
-              sourcemap: true,
+              sourceMap: true,
             },
           },
         ],

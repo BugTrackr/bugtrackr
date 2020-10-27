@@ -11,8 +11,6 @@ const usersController = {};
 usersController.getAssigned = (req, res, next) => {
   const {userId} = req.params;
   const selection = `SELECT * from bugs where bugs.assigned_to = ${userId} order by bugs.id`;
-  console.log('userId :>> ', userId);
-  console.log('selection :>> ', selection);
   db.query(selection)
     .then(results => {
       res.locals.data = results.rows;

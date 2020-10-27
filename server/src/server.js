@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const bugRouter = require('./routes/bugs');
+const userRouter = require('./routes/users');
 const app = express();
 const PORT = 3000;
 
@@ -11,6 +12,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use('/bugs', bugRouter);
+app.use('/users', userRouter);
 
 // global error handler
 app.use((err, req, res, next) => {

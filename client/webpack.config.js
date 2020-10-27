@@ -25,10 +25,13 @@ module.exports = {
       inject: 'body',
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.css'],
+  },
   module: {
     rules: [
       {
-        test: /\.m?js(x)?$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
@@ -48,6 +51,7 @@ module.exports = {
               sourceMap: true,
             },
           },
+          'postcss-loader',
         ],
       },
     ],

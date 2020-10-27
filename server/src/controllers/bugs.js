@@ -13,6 +13,8 @@ bugsController.getAllStatus = (req, res, next) => {
   .catch(error => next(error));
 };
 
+// TODO: required vs optiona fields, what data is sent, and error flows
+
 bugsController.create = (req, res, next) => {
   const {userId, description, assigned_to, projectId, status} = req.body;
 
@@ -49,8 +51,12 @@ bugsController.get = (req, res, next) => {
 // Updates a single bug
 bugsController.update = (req, res, next) => {
   const {bugId, assigned_to, description, projectId, status} = req.body;
-  const selection = `
-    UPDATE bugs set assigned_to = ${assigned_to}, description = '${description}', project_id = ${projectId}, status = ${status}
+  const selection = (assigned_to === undefined)
+  ? `
+    UPDATE bugs set description = '${description}', project_id = ${projectId}, status = ${status}
+    WHERE id = ${bugId}
+    RETURNING id, project_id, author, assigned_to, description, status`
+  : `UPDATE bugs set assigned_to = ${assigned_to}, description = '${description}', project_id = ${projectId}, status = ${status}
     WHERE id = ${bugId}
     RETURNING id, project_id, author, assigned_to, description, status`;
 

@@ -38,7 +38,9 @@ bugsController.create = (req, res, next) => {
 // Gets the details for :bugId
 bugsController.get = (req, res, next) => {
   const {bugId} = req.params;
-  const selection = `SELECT * from bugs where id = ${bugId}`;
+  const selection = `
+    SELECT * from bugs
+    WHERE id = ${bugId}`;
 
   db.query(selection)
     .then(results => {
@@ -72,7 +74,8 @@ bugsController.update = (req, res, next) => {
 bugsController.delete = (req, res, next) => {
   const {bugId} = req.body;
   const selection = `
-    DELETE from bugs where id = ${bugId}
+    DELETE from bugs
+    WHERE id = ${bugId}
     RETURNING id`;
   
   db.query(selection)

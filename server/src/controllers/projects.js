@@ -17,8 +17,17 @@ projectsController.getMembers = (req, res, next) => {
 }
 
 projectsController.getDetails = (req, res, next) => {
-
-}
+  const {projectId} = req.params;
+  const sql = `
+    SELECT *
+    FROM projects
+    WHERE id = ${projectId}`;
+    db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));}
 
 projectsController.update = (req, res, next) => {
 

@@ -11,13 +11,13 @@ router.get('/getAllProjects', projectsController.getAllProjects, (req, res) => {
 });
 
 // get all members for a project
-router.get('/getMembers', (req, res) => {
+router.get('/getMembers/:projectId', (req, res) => {
 
 })
 
 // get project details
-router.get('/getDetails', (req, res) => {
-
+router.get('/getDetails/:projectId', projectsController.getDetails, (req, res) => {
+  res.status(200).json(res.locals.data);
 })
 
 // update project details

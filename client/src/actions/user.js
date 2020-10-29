@@ -5,8 +5,9 @@ import {
 } from '../actionTypes/user';
 // add axios or maybe just use fetch.
 
-export const setAuthenticationSuccess = () => ({
+export const setAuthenticationSuccess = (status) => ({
   type: FETCH_AUTHENTICATION_SUCCESS,
+  status,
 });
 
 export const setFetching = () => ({
@@ -22,19 +23,15 @@ export const logIn = () => {
   return (dispatch) => {
     // send a request and then dispatch actions
     dispatch(setFetching());
-    // simulation
-    setTimeout(() => {
-      dispatch(setAuthenticationSuccess());
-    }, 2000);
+    // simulation of logging in
+    return Promise.resolve(dispatch(setAuthenticationSuccess(true)));
   };
 };
 
 export const logOut = () => {
   return (dispatch) => {
     dispatch(setFetching);
-    // simulation
-    setTimeout(() => {
-      dispatch(setAuthenticationSuccess());
-    }, 2000);
+    // simulation of logging out
+    return Promise.resolve(dispatch(setAuthenticationSuccess(false)));
   };
 };

@@ -20,7 +20,7 @@ function userReducer(state = initialState, action) {
     case FETCH_AUTHENTICATION_SUCCESS:
       return {
         ...state,
-        isAuthenticated: true,
+        isAuthenticated: action.status,
         isFetching: false,
       };
     case FETCH_AUTHENTICATION_FAILURE:

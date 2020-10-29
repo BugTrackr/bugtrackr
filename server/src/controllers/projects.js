@@ -48,7 +48,7 @@ projectsController.addMember = (req, res, next) => {
     .catch(error => next(error));
 };
 
-projectsController.updateMembers = (req, res, next) => {
+projectsController.updateMembers = async (req, res, next) => {
   const {projectId, members} = req.body;
 
   // first delete all existing members
@@ -56,26 +56,32 @@ projectsController.updateMembers = (req, res, next) => {
     DELETE FROM memberlist
     WHERE project_id = ${projectId}`
 
-  db.query(sql)
+  await db.query(sql)
     .then(results => {
       res.locals.data = results.rows;
     })
     .catch(error => next(error));
 
+  const memberList = [];
   // add users to memberlist
-  members.forEach(userId => {
-    const sql = `
-      INSERT into memberlist (user_id, project_id)
-      VALUES (${userId}, ${projectId})
-      RETURNING id, project_id, user_id`;
-
-    db.query(sql)
-        .then(results => {
-          res.locals.data = results.rows;
-          next();
-        })
-        .catch(error => next(error));
+  res.locals.data = [];
+  const newMembers = [];
+  members.forEach(async userId => {
+    newMembers.push(`(${userId}, ${projectId})`)
   });
+  const values = newMembers.join(',');
+  sql = `
+    INSERT into memberlist (user_id, project_id)
+    VALUES ${values}
+    RETURNING id, project_id, user_id`;
+
+  await db.query(sql)
+      .then(results => {
+        res.locals.data.push(...results.rows);
+        memberList.push(res.locals.data);
+      })
+      .catch(error => next(error));
+  next();
 };
 
 projectsController.removeMember = (req, res, next) => {
@@ -94,39 +100,44 @@ projectsController.removeMember = (req, res, next) => {
     .catch(error => next(error));
 };
 
-projectsController.create = (req, res, next) => {
+projectsController.create = async (req, res, next) => {
   const {name, owner, users} = req.body;
   
   // first create the project and get the projectId
   const sql = `
     INSERT into projects (name, owner)
-    VALUES (${name}, ${owner})
+    VALUES ('${name}', ${owner})
     RETURNING id, name, owner`;
 
   let projectId;
 
-  db.query(sql)
+  await db.query(sql)
     .then(results => {
       projectId = results.rows[0].id;
+      res.locals.data = results.rows;
+      // next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 
   // then create the memberlist
   if (users.length > 0) {
     const members = [];
-    users.forEach(userId => {
-      const sql = `
-        INSERT INTO memberlist (user_id, project_id)
-        VALUES (${userId}, ${projectId})
-        RETURNING user_id`;
-
-      db.query(sql)
-        .then(results => {
-          members.push(results.rows[0].user_id);
-        })
-        .catch(error => next(error));
+    users.forEach(async userId => {
+      members.push(`(${userId}, ${projectId})`);
     });
+    const values = members.join(',');
+    const sql = `
+      INSERT INTO memberlist (user_id, project_id)
+      VALUES ${values}
+      RETURNING user_id`;
+
+    await db.query(sql)
+      .then(results => {
+        res.locals.members = results.rows;
+      })
+      .catch(error => next(error, req, res));
   }
+  next();
 };
 
 projectsController.get = (req, res, next) => {
@@ -148,7 +159,7 @@ projectsController.update = (req, res, next) => {
   const {projectId, name, owner} = req.body;
   const sql = `
     UPDATE projects
-    SET name = ${name}, owner = ${owner}
+    SET name = '${name}', owner = ${owner}
     WHERE id = ${projectId}
     RETURNING id, name, owner`
 
@@ -160,7 +171,7 @@ projectsController.update = (req, res, next) => {
     .catch(error => next(error));
 };
 
-projectsController.delete = (req, res, next) => {
+projectsController.delete = async (req, res, next) => {
   const {projectId} = req.body;
 
   // first delete the memberlist
@@ -168,9 +179,10 @@ projectsController.delete = (req, res, next) => {
     DELETE FROM memberlist
     WHERE project_id = ${projectId}`;
   
-  db.query(sql)
+  await db.query(sql)
     .then(results => {
       res.locals.data = results.rows;
+      // next();
     })
     .catch(error => next(error)); 
 

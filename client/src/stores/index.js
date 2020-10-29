@@ -8,7 +8,7 @@ export default function configureStore(preloadedState = {}) {
   const middlewares = [thunkMiddleware];
   const middlewareEnhancer = applyMiddleware(...middlewares);
   const composedEnhancers = composeWithDevTools(middlewareEnhancer);
-  const reducers = combineReducers({ userReducer });
+  const reducers = combineReducers({ user: userReducer });
   const store = createStore(reducers, preloadedState, composedEnhancers);
 
   if (process.env.NODE_ENV !== 'production' && module.hot) {

@@ -15,6 +15,7 @@ module.exports = {
     open: true,
     hot: true,
     watchContentBase: true,
+    historyApiFallback: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -25,10 +26,13 @@ module.exports = {
       inject: 'body',
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx', '.css'],
+  },
   module: {
     rules: [
       {
-        test: /\.m?js(x)?$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
@@ -39,16 +43,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-            },
-          },
-        ],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
   },

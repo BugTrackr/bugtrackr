@@ -15,6 +15,7 @@ module.exports = {
     open: true,
     hot: true,
     watchContentBase: true,
+    historyApiFallback: true,
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -42,17 +43,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              sourceMap: true,
-            },
-          },
-          'postcss-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
   },

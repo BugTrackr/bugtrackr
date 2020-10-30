@@ -1,7 +1,14 @@
 import React from 'react';
-import { useParams, useRouteMatch } from 'react-router-dom';
+import { useParams, Switch, Route } from 'react-router-dom';
 
+import ProjectDetail from '../components/ProjectDetail';
 export default (props) => {
-  console.log('props', props);
-  return <div>Detail</div>;
+  return (
+    <div>
+      <Switch>
+        <Route path="/projects/:id" component={ProjectDetail} />
+        <Route path="/bugs/:id" component={() => <div>Bug Detail</div>} />
+      </Switch>
+    </div>
+  );
 };

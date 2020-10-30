@@ -15,16 +15,20 @@ const Login = ({ logIn, history }) => {
   };
 
   return (
-    <div className="container w-full mx-auto p-20">
+    <div className="w-full min-h-full flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="h-64 w-1/2 mx-auto my-20 flex flex-col"
+        className="h-auto w-1/2 flex flex-col shadow-lg p-3 rounded-md"
       >
-        <label htmlFor="username">Username</label>
-        <input type="text" id="username" required className="w-full" />
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" required className="w-full" />
-        <button type="submit" className="block w-1/4 mx-auto bg-gray-500">
+        <div className="mb-4">
+          <label htmlFor="username">Username</label>
+          <input type="text" id="username" required className="w-full bg-gray-200 focus:outline-none focus:border-indigo-300 focus:shadow-outline focus:border-solid focus:border-2" />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="password">Password</label>
+          <input type="password" id="password" required className="w-full bg-gray-200 focus:outline-none focus:border-indigo-300 focus:shadow-outline focus:border-solid focus:border-2" />
+        </div>
+        <button type="submit" className="block w-1/4 mx-auto bg-indigo-500 rounded-sm p-2 shadow-lg text-white transform hover:scale-105 transition duration-300 ease-in">
           Login
         </button>
       </form>

@@ -3,11 +3,11 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 export default (props) => {
   return (
-    <div>
-      <NavLink to="/projects" activeClassName="text-blue-500">
+    <div className="flex flex-col flex-none">
+      <NavLink to="/projects" activeClassName="text-indigo-500">
         Projects
       </NavLink>
-      <NavLink to="/bugs" activeClassName="text-blue-500">
+      <NavLink to="/bugs" activeClassName="text-indigo-500">
         Your assigned bugs
       </NavLink>
     </div>

@@ -8,7 +8,7 @@ export default () => {
   console.log('path', path);
   console.log('url', url);
   return (
-    <div>
+    <div className="w-full">
       <div>This is the display section</div>
       <Switch>
         <Route

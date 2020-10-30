@@ -4,7 +4,7 @@ import DisplaySection from './DisplaySection';
 
 export default () => {
   return (
-    <div>
+    <div className="w-full flex align-center p-4 space-x-4">
       <BodyNav />
       <DisplaySection />
     </div>

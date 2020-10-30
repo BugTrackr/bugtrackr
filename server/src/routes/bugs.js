@@ -8,11 +8,17 @@ const router = express.Router();
 // sample test route to just get all the STATUS values
 router.get('/getAllStatus', bugsController.getAllStatus, (req, res) => res.status(200).json(res.locals.data));
 
-// this route will create a new bug in the database
-router.post('/create', bugsController.create, (req, res) => res.status(200).json(res.locals.data));
+// this route will get all the bugs
+router.get('/getAllBugs/:limit?/:offset?', bugsController.getAllBugs, (req, res) => res.status(200).json(res.locals.data));
+
+// this route will get the total number of bugs
+router.get('/getAllBugsCount', bugsController.getAllBugsCount, (req, res) => res.status(200).json(res.locals.data));
 
 // this route will get the current bug details for given bug id
 router.get('/:bugId', bugsController.get, (req, res) => res.status(200).json(res.locals.data));
+
+// this route will create a new bug in the database
+router.post('/create', bugsController.create, (req, res) => res.status(200).json(res.locals.data));
 
 // this route will update the bug details for given bug id
 router.post('/update', bugsController.update, (req, res) => res.status(200).json(res.locals.data));

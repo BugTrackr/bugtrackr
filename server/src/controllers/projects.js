@@ -2,8 +2,33 @@ const db = require('../models/bugs');
 
 const projectsController = {};
 
+// gets the list of all projects
 projectsController.getAllProjects = (req, res, next) => {
-  const sql = `SELECT * FROM projects`;
+  const {limit, offset} = req.params;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+  
+  const sql = `
+    SELECT *
+    FROM projects
+    ORDER by projects.id
+    ${limitClause}
+    ${offsetClause}`;
+
+  db.query(sql)
+  .then(results => {
+    res.locals.data = results.rows;
+    next();
+  })
+  .catch(error => next(error));
+};
+
+// gets the number of projects
+projectsController.getAllProjectsCount = (req, res, next) => {
+  const sql = `
+    SELECT COUNT(*)
+    FROM projects`;
 
   db.query(sql)
   .then(results => {
@@ -14,7 +39,11 @@ projectsController.getAllProjects = (req, res, next) => {
 };
 
 projectsController.getMembers = (req, res, next) => {
-  const {projectId} = req.params;
+  const {projectId, limit, offset} = req.params;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+  
   const sql = `
     SELECT projects.id as project_id, projects.name as project_name, users.id as user_id, users.username
     FROM ((memberlist
@@ -22,7 +51,10 @@ projectsController.getMembers = (req, res, next) => {
     ON memberlist.project_id = projects.id)
     INNER JOIN users
     ON users.id = memberlist.user_id)
-    WHERE projects.id = ${projectId}`;
+    WHERE projects.id = ${projectId}
+    ORDER BY users.id
+    ${limitClause}
+    ${offsetClause}`;
 
   db.query(sql)
     .then(results => {
@@ -71,7 +103,7 @@ projectsController.updateMembers = async (req, res, next) => {
   });
   const values = newMembers.join(',');
   sql = `
-    INSERT into memberlist (user_id, project_id)
+    INSERT INTO memberlist (user_id, project_id)
     VALUES ${values}
     RETURNING id, project_id, user_id`;
 
@@ -105,7 +137,7 @@ projectsController.create = async (req, res, next) => {
   
   // first create the project and get the projectId
   const sql = `
-    INSERT into projects (name, owner)
+    INSERT INTO projects (name, owner)
     VALUES ('${name}', ${owner})
     RETURNING id, name, owner`;
 
@@ -198,6 +230,44 @@ projectsController.delete = async (req, res, next) => {
       next();
     })
     .catch(error => next(error));    
+};
+
+projectsController.getBugs = async (req, res, next) => {
+  const {projectId, limit, offset} = req.params;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+  
+  const sql = `
+    SELECT *
+    FROM bugs
+    WHERE project_id = ${projectId}
+    ORDER BY bugs.id
+    ${limitClause}
+    ${offsetClause}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));     
+};
+
+projectsController.getBugsCount = async (req, res, next) => {
+  const {projectId} = req.params;
+
+  const sql = `
+    SELECT COUNT(*)
+    FROM bugs
+    WHERE project_id = ${projectId}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));     
 };
 
 module.exports = projectsController;

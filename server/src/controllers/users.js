@@ -9,7 +9,7 @@ usersController.get = (req, res, next) => {
     SELECT id, username
     FROM users
     WHERE id = ${userId}`;
-  
+
   db.query(sql)
     .then(results => {
       res.locals.data = results.rows;
@@ -35,6 +35,66 @@ usersController.getAssignedBugs = (req, res, next) => {
     ORDER BY bugs.id
     ${limitClause}
     ${offsetClause}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));
+};
+
+usersController.getAssignedBugsCount = (req, res, next) => {
+  const {userId} = req.params;
+
+  const sql = `
+    SELECT COUNT(*)
+    FROM bugs
+    WHERE bugs.assigned_to = ${userId}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));
+};
+
+// gets all projects that the user is a member of
+usersController.getProjects = (req, res, next) => {
+  const {userId, limit, offset} = req.params;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+
+  const sql = `
+    SELECT projects.id, projects.name, projects.owner
+    FROM projects
+    INNER JOIN memberlist
+    ON memberlist.project_id = projects.id
+    WHERE memberlist.user_id = ${userId}
+    ORDER BY projects.id
+    ${limitClause}
+    ${offsetClause}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));
+};
+
+// gets the number of projects that the user is a member of
+usersController.getProjectsCount = (req, res, next) => {
+  const {userId} = req.params;
+  
+  const sql = `
+    SELECT COUNT(*)
+    FROM projects
+    INNER JOIN memberlist
+    ON memberlist.project_id = projects.id
+    WHERE memberlist.user_id = ${userId}`;
 
   db.query(sql)
     .then(results => {

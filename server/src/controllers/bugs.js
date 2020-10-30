@@ -37,9 +37,11 @@ bugsController.create = (req, res, next) => {
 
 // Gets the details for :bugId
 bugsController.get = (req, res, next) => {
+  console.log('bugsController.get');
   const {bugId} = req.params;
   const sql = `
-    SELECT * from bugs
+    SELECT *
+    FROM bugs
     WHERE id = ${bugId}`;
 
   db.query(sql)
@@ -102,6 +104,41 @@ bugsController.resolve = (req, res, next) => {
       next();
     })
     .catch(error => next(error));  
+};
+
+// Gets all the bugs
+bugsController.getAllBugs = (req, res, next) => {
+  const {limit, offset} = req.params;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+  
+  const sql = `
+    SELECT *
+    FROM bugs
+    ${limitClause}
+    ${offsetClause}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));
+};
+
+// Gets all the bugs
+bugsController.getAllBugsCount = (req, res, next) => {
+  const sql = `
+    SELECT COUNT(*)
+    FROM bugs`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));
 };
 
 module.exports = bugsController;

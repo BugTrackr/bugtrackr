@@ -98,7 +98,7 @@ projectsController.updateMembers = async (req, res, next) => {
   // add users to memberlist
   res.locals.data = [];
   const newMembers = [];
-  members.forEach(async userId => {
+  members.forEach(userId => {
     newMembers.push(`(${userId}, ${projectId})`)
   });
   const values = newMembers.join(',');
@@ -154,7 +154,7 @@ projectsController.create = async (req, res, next) => {
   // then create the memberlist
   if (users.length > 0) {
     const members = [];
-    users.forEach(async userId => {
+    users.forEach(userId => {
       members.push(`(${userId}, ${projectId})`);
     });
     const values = members.join(',');

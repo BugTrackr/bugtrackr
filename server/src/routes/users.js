@@ -24,6 +24,16 @@ router.get('/getProjectsCount/:userId', usersController.getProjectsCount, (req, 
   res.status(200).json(res.locals.data);
 });
 
+// this route will get all users
+router.get('/getAllUsers/:limit?/:offset?', usersController.getAllUsers, (req, res) => {
+  res.status(200).json(res.locals.data);
+});
+
+// this route will get the total number of users
+router.get('/getAllUsersCount?', usersController.getAllUsers, (req, res) => {
+  res.status(200).json(res.locals.data);
+});
+
 // this route will get the details for given user id
 router.get('/:userId', usersController.get, (req, res) => {
   res.status(200).json(res.locals.data);

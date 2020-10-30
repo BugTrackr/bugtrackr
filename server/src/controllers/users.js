@@ -18,6 +18,39 @@ usersController.get = (req, res, next) => {
     .catch(error => next(error));
 };
 
+usersController.getAllUsersCount = (req, res, next) => { 
+  const sql = `
+    SELECT COUNT(*)
+    FROM users`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));
+};
+
+usersController.getAllUsers = (req, res, next) => {
+  const {limit, offset} = req.params;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+  
+  const sql = `
+    SELECT id, username
+    FROM users
+    ${limitClause}
+    ${offsetClause}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error));
+};
+
 // Get all assigned bugs for userId
 //
 // TODO: ordering

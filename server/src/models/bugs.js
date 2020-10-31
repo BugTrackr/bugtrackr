@@ -1,7 +1,5 @@
 const { Pool } = require('pg');
 
-console.log('process.env.PG_URI :>> ', process.env.PG_URI);
-
 const PG_URI = process.env.PG_URI;
 
 const pool = new Pool({

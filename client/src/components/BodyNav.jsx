@@ -10,6 +10,9 @@ export default (props) => {
       <NavLink to="/bugs" activeClassName="text-indigo-500">
         Your assigned bugs
       </NavLink>
+      <NavLink to="/createbug" activeClassName="text-indigo-500">
+        Create a New Bug
+      </NavLink>
     </div>
   );
 };

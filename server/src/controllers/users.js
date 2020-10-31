@@ -160,8 +160,7 @@ usersController.getOwnedProjectsCount = (req, res, next) => {
   const sql = `
     SELECT COUNT(*)
     FROM projects
-    WHERE projects.owner = ${userId}
-    ORDER BY projects.id`;
+    WHERE projects.owner = ${userId}`;
 
   db.query(sql)
     .then(results => {
@@ -254,6 +253,7 @@ usersController.getAllUsers = (req, res, next) => {
   const sql = `
     SELECT id, username
     FROM users
+    ORDER BY id
     ${limitClause}
     ${offsetClause}`;
 

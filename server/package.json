@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node -r dotenv/config src/server.js dotenv_config_path=./.env",
     "dev": "nodemon -r dotenv/config src/server.js dotenv_config_path=./.env",
-    "test": "jest --coverage --verbose --silent"
+    "test": "jest --coverage --verbose --silent --runInBand"
   },
   "author": "",
   "license": "ISC",

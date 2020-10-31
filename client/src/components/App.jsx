@@ -33,7 +33,7 @@ export default (props) => {
             <Route path="/login" component={Login} />
             <PrivateRoute
               exact
-              path={['/projects', '/bugs']}
+              path={['/projects', '/bugs', '/createbug']}
               component={Content}
             />
             <PrivateRoute

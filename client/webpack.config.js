@@ -17,8 +17,9 @@ module.exports = {
     watchContentBase: true,
     historyApiFallback: true,
     proxy: {
-      '/projects/': 'http://localhost:3000'
-    }
+      '/projects/': 'http://localhost:3000',
+      '/users/': 'http://localhost:3000',
+    },
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -41,7 +42,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ['@babel/plugin-transform-runtime']
+            plugins: ['@babel/plugin-transform-runtime'],
           },
         },
       },

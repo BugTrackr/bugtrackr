@@ -9,12 +9,12 @@ export default ({
   onClick,
 }) => {
   return (
-    <li onClick={onClick}>
-      <div>{project_id}</div>
-      <div>{author}</div>
-      <div>{assigned_to}</div>
-      <div>{description}</div>
-      <div>{status}</div>
+    <li onClick={onClick} className="flex gap-2 border-b border-gray-400">
+      <div className="flex-1 text-gray-700 m-2 pl-2">{project_id}</div>
+      {/* <div className="flex-1 text-gray-700 m-2">{author}</div>
+      <div className="flex-1 text-gray-700 m-2">{assigned_to}</div> */}
+      <div className="flex-1 text-gray-700 m-2 pl-2">{description}</div>
+      <div className="flex-1 text-gray-700 m-2 pl-2">{status}</div>
     </li>
   );
 };

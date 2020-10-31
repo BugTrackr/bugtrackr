@@ -1,4 +1,10 @@
-import { applyMiddleware, createStore, combineReducers } from 'redux';
+import {
+  applyMiddleware,
+  createStore,
+  combineReducers,
+  getState,
+  dispatch,
+} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 

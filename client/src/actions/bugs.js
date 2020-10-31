@@ -1,11 +1,16 @@
-import { ADD_BUG, SET_BUGS } from '../actionTypes/bugs';
+import { ADD_BUG, SET_BUGS, GET_PROJECTS } from '../actionTypes/bugs';
 
 export const addBug = (bug) => ({
   type: ADD_BUG,
   payload: bug,
 });
 
-export const setBugs = (bugs) => ({
+export const setBugs = (bugList) => ({
   type: SET_BUGS,
-  payload: bugs,
+  payload: bugList,
+});
+
+export const getProjects = (allProjects) => ({
+  type: GET_PROJECTS,
+  payload: allProjects,
 });

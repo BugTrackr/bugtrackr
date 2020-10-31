@@ -10,14 +10,14 @@ describe('projects supertests', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
       {
-          "id": 9999,
-          "name": "Test Project",
-          "owner": 9999
-      },
-      {
           "id": 1,
           "name": "BugTrackr",
           "owner": 1
+      },
+      {
+          "id": 9999,
+          "name": "Test Project",
+          "owner": 9999
       }
   ]);
     done();
@@ -31,14 +31,14 @@ describe('projects supertests', () => {
       {
           "project_id": 9999,
           "project_name": "Test Project",
-          "user_id": 9999,
-          "username": "test"
+          "user_id": 1,
+          "username": "steve"
       },
       {
           "project_id": 9999,
           "project_name": "Test Project",
-          "user_id": 1,
-          "username": "steve"
+          "user_id": 9999,
+          "username": "test"
       }
   ]);
     done();

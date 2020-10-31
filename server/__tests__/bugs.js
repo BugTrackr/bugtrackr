@@ -93,7 +93,7 @@ describe('bugs supertests', () => {
     const response = await request.post('/bugs/resolve')
     .send({
       bugId: bugId,
-      resolved: 3
+      status: 3
     })
     .set('Accept', 'application/json');
     expect(response.status).toBe(200);

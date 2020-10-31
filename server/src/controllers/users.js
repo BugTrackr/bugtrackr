@@ -15,7 +15,7 @@ usersController.get = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 usersController.getAllUsersCount = (req, res, next) => { 
@@ -28,7 +28,7 @@ usersController.getAllUsersCount = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 usersController.getAllUsers = (req, res, next) => {
@@ -48,7 +48,7 @@ usersController.getAllUsers = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 // Get all assigned bugs for userId
@@ -74,7 +74,7 @@ usersController.getAssignedBugs = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 usersController.getAssignedBugsCount = (req, res, next) => {
@@ -90,7 +90,7 @@ usersController.getAssignedBugsCount = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 // gets all projects that the user is a member of
@@ -115,7 +115,7 @@ usersController.getProjects = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 // gets the number of projects that the user is a member of
@@ -134,7 +134,7 @@ usersController.getProjectsCount = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 module.exports = usersController;

@@ -21,7 +21,7 @@ projectsController.getAllProjects = (req, res, next) => {
     res.locals.data = results.rows;
     next();
   })
-  .catch(error => next(error));
+  .catch(error => next(error, req, res));
 };
 
 // gets the number of projects
@@ -35,7 +35,7 @@ projectsController.getAllProjectsCount = (req, res, next) => {
     res.locals.data = results.rows;
     next();
   })
-  .catch(error => next(error));
+  .catch(error => next(error, req, res));
 };
 
 projectsController.getMembers = (req, res, next) => {
@@ -61,7 +61,7 @@ projectsController.getMembers = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));    
+    .catch(error => next(error, req, res));    
 };
 
 projectsController.addMember = (req, res, next) => {
@@ -77,7 +77,7 @@ projectsController.addMember = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 projectsController.updateMembers = async (req, res, next) => {
@@ -92,7 +92,7 @@ projectsController.updateMembers = async (req, res, next) => {
     .then(results => {
       res.locals.data = results.rows;
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 
   const memberList = [];
   // add users to memberlist
@@ -112,7 +112,7 @@ projectsController.updateMembers = async (req, res, next) => {
         res.locals.data.push(...results.rows);
         memberList.push(res.locals.data);
       })
-      .catch(error => next(error));
+      .catch(error => next(error, req, res));
   next();
 };
 
@@ -129,7 +129,7 @@ projectsController.removeMember = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 projectsController.create = async (req, res, next) => {
@@ -184,7 +184,7 @@ projectsController.get = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 projectsController.update = (req, res, next) => {
@@ -200,7 +200,7 @@ projectsController.update = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 projectsController.delete = async (req, res, next) => {
@@ -216,7 +216,7 @@ projectsController.delete = async (req, res, next) => {
       res.locals.data = results.rows;
       // next();
     })
-    .catch(error => next(error)); 
+    .catch(error => next(error, req, res)); 
 
   // then delete the project itself
   sql = `
@@ -229,7 +229,7 @@ projectsController.delete = async (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));    
+    .catch(error => next(error, req, res));    
 };
 
 projectsController.getBugs = async (req, res, next) => {
@@ -251,7 +251,7 @@ projectsController.getBugs = async (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));     
+    .catch(error => next(error, req, res));     
 };
 
 projectsController.getBugsCount = async (req, res, next) => {
@@ -267,7 +267,7 @@ projectsController.getBugsCount = async (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));     
+    .catch(error => next(error, req, res));     
 };
 
 module.exports = projectsController;

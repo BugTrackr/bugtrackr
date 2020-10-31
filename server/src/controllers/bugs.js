@@ -10,7 +10,7 @@ bugsController.getAllStatus = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 // TODO: required vs optiona fields, what data is sent, and error flows
@@ -32,7 +32,7 @@ bugsController.create = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 // Gets the details for :bugId
@@ -49,7 +49,7 @@ bugsController.get = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 // Updates a single bug
@@ -69,7 +69,7 @@ bugsController.update = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));  
+    .catch(error => next(error, req, res));  
 };
 
 // Deletes a single bug
@@ -85,7 +85,7 @@ bugsController.delete = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));  
+    .catch(error => next(error, req, res));  
 };
 
 // Sets the status to 'RESOLVED' for a single bug
@@ -103,7 +103,7 @@ bugsController.resolve = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));  
+    .catch(error => next(error, req, res));  
 };
 
 // Gets all the bugs
@@ -124,7 +124,7 @@ bugsController.getAllBugs = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 // Gets all the bugs
@@ -138,7 +138,7 @@ bugsController.getAllBugsCount = (req, res, next) => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error));
+    .catch(error => next(error, req, res));
 };
 
 module.exports = bugsController;

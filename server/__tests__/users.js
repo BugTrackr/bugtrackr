@@ -303,4 +303,11 @@ describe('users supertests', () => {
     done();
   });
 
+
+  it('get details for a bad userId', async (done) => {
+    const response = await request.get('/users/baduserid');
+    expect(response.status).toBe(500);
+    done();
+  });
+
 });

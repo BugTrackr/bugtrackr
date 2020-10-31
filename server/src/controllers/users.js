@@ -253,6 +253,7 @@ usersController.getAllUsers = (req, res, next) => {
   const sql = `
     SELECT id, username
     FROM users
+    ORDER BY id
     ${limitClause}
     ${offsetClause}`;
 

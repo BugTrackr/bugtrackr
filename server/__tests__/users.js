@@ -142,10 +142,6 @@ describe('users supertests', () => {
           "username": "steve"
       },
       {
-          "id": 9999,
-          "username": "test"
-      },
-      {
           "id": 2,
           "username": "umar"
       },
@@ -156,8 +152,12 @@ describe('users supertests', () => {
       {
           "id": 4,
           "username": "mariya"
+      },
+      {
+          "id": 9999,
+          "username": "test"
       }
-    ]);
+  ]);
     done();
   });
 
@@ -170,10 +170,6 @@ describe('users supertests', () => {
           "username": "steve"
       },
       {
-          "id": 9999,
-          "username": "test"
-      },
-      {
           "id": 2,
           "username": "umar"
       },
@@ -184,8 +180,12 @@ describe('users supertests', () => {
       {
           "id": 4,
           "username": "mariya"
+      },
+      {
+          "id": 9999,
+          "username": "test"
       }
-    ]);
+  ]);
     done();
   });
 

@@ -2,42 +2,7 @@ const db = require('../models/bugs');
 
 const projectsController = {};
 
-// gets the list of all projects
-projectsController.getAllProjects = (req, res, next) => {
-  const {limit, offset} = req.query;
-
-  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
-  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
-  
-  const sql = `
-    SELECT *
-    FROM projects
-    ORDER by projects.id
-    ${limitClause}
-    ${offsetClause}`;
-
-  db.query(sql)
-  .then(results => {
-    res.locals.data = results.rows;
-    next();
-  })
-  .catch(error => next(error, req, res));
-};
-
-// gets the number of projects
-projectsController.getAllProjectsCount = (req, res, next) => {
-  const sql = `
-    SELECT COUNT(*)
-    FROM projects`;
-
-  db.query(sql)
-  .then(results => {
-    res.locals.data = results.rows;
-    next();
-  })
-  .catch(error => next(error, req, res));
-};
-
+// Get all members for a project
 projectsController.getMembers = (req, res, next) => {
   const {projectId} = req.params;
   const {limit, offset} = req.query;
@@ -65,6 +30,7 @@ projectsController.getMembers = (req, res, next) => {
     .catch(error => next(error, req, res));    
 };
 
+// Add a member to a project
 projectsController.addMember = (req, res, next) => {
   const {projectId, userId} = req.body;
 
@@ -81,6 +47,7 @@ projectsController.addMember = (req, res, next) => {
     .catch(error => next(error, req, res));
 };
 
+// Update members for a project
 projectsController.updateMembers = async (req, res, next) => {
   const {projectId, members} = req.body;
 
@@ -117,6 +84,7 @@ projectsController.updateMembers = async (req, res, next) => {
   next();
 };
 
+// Remove a member from a project
 projectsController.removeMember = (req, res, next) => {
   const {projectId, userId} = req.body;
 
@@ -133,6 +101,84 @@ projectsController.removeMember = (req, res, next) => {
     .catch(error => next(error, req, res));
 };
 
+// Get the number of bugs for a project
+projectsController.getBugsCount = async (req, res, next) => {
+  const {projectId} = req.params;
+
+  const sql = `
+    SELECT COUNT(*)
+    FROM bugs
+    WHERE project_id = ${projectId}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error, req, res));     
+};
+
+// Get all the bugs for a project
+projectsController.getBugs = async (req, res, next) => {
+  const {projectId} = req.params;
+  const {limit, offset} = req.query;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+  
+  const sql = `
+    SELECT *
+    FROM bugs
+    WHERE project_id = ${projectId}
+    ORDER BY bugs.id
+    ${limitClause}
+    ${offsetClause}`;
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error, req, res));     
+};
+
+// Get the total number of projects
+projectsController.getAllProjectsCount = (req, res, next) => {
+  const sql = `
+    SELECT COUNT(*)
+    FROM projects`;
+
+  db.query(sql)
+  .then(results => {
+    res.locals.data = results.rows;
+    next();
+  })
+  .catch(error => next(error, req, res));
+};
+
+// Get all projects
+projectsController.getAllProjects = (req, res, next) => {
+  const {limit, offset} = req.query;
+
+  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
+  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
+  
+  const sql = `
+    SELECT *
+    FROM projects
+    ORDER by projects.id
+    ${limitClause}
+    ${offsetClause}`;
+
+  db.query(sql)
+  .then(results => {
+    res.locals.data = results.rows;
+    next();
+  })
+  .catch(error => next(error, req, res));
+};
+
+// Create a new project
 projectsController.create = async (req, res, next) => {
   const {name, owner, users} = req.body;
   
@@ -173,6 +219,7 @@ projectsController.create = async (req, res, next) => {
   next();
 };
 
+// Get the details for a project
 projectsController.get = (req, res, next) => {
   const {projectId} = req.params;
   const sql = `
@@ -188,6 +235,7 @@ projectsController.get = (req, res, next) => {
     .catch(error => next(error, req, res));
 };
 
+// Update the details for a project
 projectsController.update = (req, res, next) => {
   const {projectId, name, owner} = req.body;
   const sql = `
@@ -204,6 +252,7 @@ projectsController.update = (req, res, next) => {
     .catch(error => next(error, req, res));
 };
 
+// Delete a project
 projectsController.delete = async (req, res, next) => {
   const {projectId} = req.body;
 
@@ -233,43 +282,34 @@ projectsController.delete = async (req, res, next) => {
     .catch(error => next(error, req, res));    
 };
 
-projectsController.getBugs = async (req, res, next) => {
-  const {projectId} = req.params;
-  const {limit, offset} = req.query;
-
-  const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
-  const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
-  
-  const sql = `
-    SELECT *
-    FROM bugs
-    WHERE project_id = ${projectId}
-    ORDER BY bugs.id
-    ${limitClause}
-    ${offsetClause}`;
-
-  db.query(sql)
-    .then(results => {
-      res.locals.data = results.rows;
-      next();
-    })
-    .catch(error => next(error, req, res));     
-};
-
-projectsController.getBugsCount = async (req, res, next) => {
+// Delete a project
+projectsController.deleteProject = async (req, res, next) => {
   const {projectId} = req.params;
 
-  const sql = `
-    SELECT COUNT(*)
-    FROM bugs
+  // first delete the memberlist
+  let sql = `
+    DELETE FROM memberlist
     WHERE project_id = ${projectId}`;
+  
+  await db.query(sql)
+    .then(results => {
+      res.locals.data = results.rows;
+      // next();
+    })
+    .catch(error => next(error, req, res)); 
+
+  // then delete the project itself
+  sql = `
+    DELETE FROM projects
+    WHERE id = ${projectId}
+    RETURNING id`;
 
   db.query(sql)
     .then(results => {
       res.locals.data = results.rows;
       next();
     })
-    .catch(error => next(error, req, res));     
+    .catch(error => next(error, req, res));    
 };
 
 module.exports = projectsController;

@@ -32,7 +32,7 @@ usersController.getAllUsersCount = (req, res, next) => {
 };
 
 usersController.getAllUsers = (req, res, next) => {
-  const {limit, offset} = req.params;
+  const {limit, offset} = req.query;
 
   const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
   const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
@@ -51,12 +51,10 @@ usersController.getAllUsers = (req, res, next) => {
     .catch(error => next(error, req, res));
 };
 
-// Get all assigned bugs for userId
-//
-// TODO: ordering
-// By default, order will be by bugId and project(?)
+// Get all the bugs assigned to a user
 usersController.getAssignedBugs = (req, res, next) => {
-  const {userId, limit, offset} = req.params;
+  const {userId} = req.params;
+  const {limit, offset} = req.query;
 
   const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
   const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
@@ -95,7 +93,8 @@ usersController.getAssignedBugsCount = (req, res, next) => {
 
 // gets all projects that the user is a member of
 usersController.getProjects = (req, res, next) => {
-  const {userId, limit, offset} = req.params;
+  const {userId} = req.params;
+  const {limit, offset} = req.query;
 
   const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
   const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;

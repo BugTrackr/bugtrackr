@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/getAllStatus', bugsController.getAllStatus, (req, res) => res.status(200).json(res.locals.data));
 
 // this route will get all the bugs
-router.get('/getAllBugs/:limit?/:offset?', bugsController.getAllBugs, (req, res) => res.status(200).json(res.locals.data));
+router.get('/getAllBugs', bugsController.getAllBugs, (req, res) => res.status(200).json(res.locals.data));
 
 // this route will get the total number of bugs
 router.get('/getAllBugsCount', bugsController.getAllBugsCount, (req, res) => res.status(200).json(res.locals.data));

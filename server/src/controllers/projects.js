@@ -4,7 +4,7 @@ const projectsController = {};
 
 // gets the list of all projects
 projectsController.getAllProjects = (req, res, next) => {
-  const {limit, offset} = req.params;
+  const {limit, offset} = req.query;
 
   const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
   const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
@@ -39,7 +39,8 @@ projectsController.getAllProjectsCount = (req, res, next) => {
 };
 
 projectsController.getMembers = (req, res, next) => {
-  const {projectId, limit, offset} = req.params;
+  const {projectId} = req.params;
+  const {limit, offset} = req.query;
 
   const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
   const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;
@@ -233,7 +234,8 @@ projectsController.delete = async (req, res, next) => {
 };
 
 projectsController.getBugs = async (req, res, next) => {
-  const {projectId, limit, offset} = req.params;
+  const {projectId} = req.params;
+  const {limit, offset} = req.query;
 
   const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
   const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;

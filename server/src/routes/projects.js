@@ -6,7 +6,7 @@ const router = express.Router();
 // TODO: update response codes, actual data returned, negative flows
 
 // getAllProjects
-router.get('/getAllProjects/:limit?/:offset?', projectsController.getAllProjects, (req, res) => {
+router.get('/getAllProjects', projectsController.getAllProjects, (req, res) => {
   res.status(200).json(res.locals.data);
 });
 
@@ -16,7 +16,7 @@ router.get('/getAllProjectsCount', projectsController.getAllProjectsCount, (req,
 });
 
 // get all members for a project
-router.get('/getMembers/:projectId/:limit?/:offset?', projectsController.getMembers, (req, res) => {
+router.get('/getMembers/:projectId', projectsController.getMembers, (req, res) => {
   res.status(200).json(res.locals.data);
 });
 
@@ -57,7 +57,7 @@ router.delete('/delete', projectsController.delete, (req, res) => {
 });
 
 // gets all bugs for a project
-router.get('/getBugs/:projectId/:limit?/:offset?', projectsController.getBugs, (req, res) => {
+router.get('/getBugs/:projectId', projectsController.getBugs, (req, res) => {
   res.status(200).json(res.locals.data);
 });
 

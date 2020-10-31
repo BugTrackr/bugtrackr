@@ -108,7 +108,7 @@ bugsController.resolve = (req, res, next) => {
 
 // Gets all the bugs
 bugsController.getAllBugs = (req, res, next) => {
-  const {limit, offset} = req.params;
+  const {limit, offset} = req.query;
 
   const limitClause = (limit === undefined) ? '' : `LIMIT ${limit}`;
   const offsetClause = (offset === undefined) ? '' : `OFFSET ${offset}`;

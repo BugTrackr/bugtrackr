@@ -2,10 +2,8 @@ const express = require('express');
 const usersController = require('../controllers/users');
 const router = express.Router();
 
-// TODO: response codes, error flows, response data
-
-// this route will get all of the assigned bugs for given user id
-router.get('/getAssignedBugs/:userId/:limit?/:offset?', usersController.getAssignedBugs, (req, res) => {
+// Get all of the bugs assigned to a user
+router.get('/getAssignedBugs/:userId', usersController.getAssignedBugs, (req, res) => {
   res.status(200).json(res.locals.data);
 });
 
@@ -15,7 +13,7 @@ router.get('/getAssignedBugsCount/:userId', usersController.getAssignedBugsCount
 });
 
 // this route will get all projects the user is a member of
-router.get('/getProjects/:userId/:limit?/:offset?', usersController.getProjects, (req, res) => {
+router.get('/getProjects/:userId', usersController.getProjects, (req, res) => {
   res.status(200).json(res.locals.data);
 });
 
@@ -25,12 +23,12 @@ router.get('/getProjectsCount/:userId', usersController.getProjectsCount, (req, 
 });
 
 // this route will get all users
-router.get('/getAllUsers/:limit?/:offset?', usersController.getAllUsers, (req, res) => {
+router.get('/getAllUsers', usersController.getAllUsers, (req, res) => {
   res.status(200).json(res.locals.data);
 });
 
 // this route will get the total number of users
-router.get('/getAllUsersCount?', usersController.getAllUsers, (req, res) => {
+router.get('/getAllUsersCount', usersController.getAllUsers, (req, res) => {
   res.status(200).json(res.locals.data);
 });
 

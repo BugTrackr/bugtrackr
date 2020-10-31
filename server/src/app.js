@@ -8,6 +8,7 @@ const app = express();
 
 app.use(express.json());
 
+// TODO: remove this test route
 app.get('/', (req, res) => {
   res.send('home page');
 });

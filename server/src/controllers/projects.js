@@ -62,26 +62,22 @@ projectsController.updateMembers = async (req, res, next) => {
     })
     .catch(error => next(error, req, res));
 
-  const memberList = [];
   // add users to memberlist
-  res.locals.data = [];
-  const newMembers = [];
-  members.forEach(userId => {
-    newMembers.push(`(${userId}, ${projectId})`)
-  });
-  const values = newMembers.join(',');
+  const values = members.map(userId => `(${userId}, ${projectId})`).join(',');
+
   sql = `
     INSERT INTO memberlist (user_id, project_id)
     VALUES ${values}
     RETURNING id, project_id, user_id`;
 
-  await db.query(sql)
-      .then(results => {
-        res.locals.data.push(...results.rows);
-        memberList.push(res.locals.data);
-      })
-      .catch(error => next(error, req, res));
-  next();
+  res.locals.data = [];
+
+  db.query(sql)
+    .then(results => {
+      res.locals.data.push(...results.rows);
+      next();
+    })
+    .catch(error => next(error, req, res));
 };
 
 // Remove a member from a project
@@ -149,11 +145,11 @@ projectsController.getAllProjectsCount = (req, res, next) => {
     FROM projects`;
 
   db.query(sql)
-  .then(results => {
-    res.locals.data = results.rows;
-    next();
-  })
-  .catch(error => next(error, req, res));
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error, req, res));
 };
 
 // Get all projects
@@ -171,11 +167,11 @@ projectsController.getAllProjects = (req, res, next) => {
     ${offsetClause}`;
 
   db.query(sql)
-  .then(results => {
-    res.locals.data = results.rows;
-    next();
-  })
-  .catch(error => next(error, req, res));
+    .then(results => {
+      res.locals.data = results.rows;
+      next();
+    })
+    .catch(error => next(error, req, res));
 };
 
 // Create a new project
@@ -194,17 +190,13 @@ projectsController.create = async (req, res, next) => {
     .then(results => {
       projectId = results.rows[0].id;
       res.locals.data = results.rows;
-      // next();
     })
     .catch(error => next(error, req, res));
 
   // then create the memberlist
   if (users.length > 0) {
-    const members = [];
-    users.forEach(userId => {
-      members.push(`(${userId}, ${projectId})`);
-    });
-    const values = members.join(',');
+    const values = users.map(userId => `(${userId}, ${projectId})`).join(',');
+
     const sql = `
       INSERT INTO memberlist (user_id, project_id)
       VALUES ${values}
@@ -222,6 +214,7 @@ projectsController.create = async (req, res, next) => {
 // Get the details for a project
 projectsController.get = (req, res, next) => {
   const {projectId} = req.params;
+
   const sql = `
     SELECT *
     FROM projects
@@ -238,6 +231,7 @@ projectsController.get = (req, res, next) => {
 // Update the details for a project
 projectsController.update = (req, res, next) => {
   const {projectId, name, owner} = req.body;
+
   const sql = `
     UPDATE projects
     SET name = '${name}', owner = ${owner}
@@ -264,7 +258,6 @@ projectsController.delete = async (req, res, next) => {
   await db.query(sql)
     .then(results => {
       res.locals.data = results.rows;
-      // next();
     })
     .catch(error => next(error, req, res)); 
 
@@ -294,7 +287,6 @@ projectsController.deleteProject = async (req, res, next) => {
   await db.query(sql)
     .then(results => {
       res.locals.data = results.rows;
-      // next();
     })
     .catch(error => next(error, req, res)); 
 
